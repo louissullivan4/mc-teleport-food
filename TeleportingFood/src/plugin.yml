@@ -1,0 +1,5 @@
+name: TeleFood
+version: 1.1
+author: Louis
+main: me.Louis.TeleFood.Main
+description: If you eat you will be teleported.
