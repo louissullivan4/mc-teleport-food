@@ -15,7 +15,7 @@ public class Listeners implements Listener {
 	@EventHandler
 	public void teleportPlayer(PlayerItemConsumeEvent event) {
 		Random rand =  new Random();
-		double limit = 10.0;
+		double limit = 50.0;
 		
 		boolean validTp = false;
 		Player p = event.getPlayer();
@@ -34,10 +34,14 @@ public class Listeners implements Listener {
 			Location newLoc = new Location(w, (xaxis + double_random), (yaxis + double_random), (zaxis + double_random));
 			Block newBlock = newLoc.getBlock();
 			Material newBlockMat = newBlock.getType();
-			
+						
 			if (newBlockMat.isAir()) {
-				validTp = true;
-				p.teleport(newLoc);
+					Location cloneLoc = newLoc.clone();
+					cloneLoc.subtract(0, 1, 0);
+			        if (cloneLoc.getBlock().getType().isSolid()) {
+			        	validTp = true;
+						p.teleport(newLoc);
+			        }
 			}
 		}
 		
