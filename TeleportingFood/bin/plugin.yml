@@ -1,5 +1,5 @@
 name: TeleFood
-version: 1.2.1
+version: 1.3.3
 author: Louis
 main: me.Louis.TeleFood.Main
-description: If you eat you will be teleported.
+description: If you eat you will be teleported. A random mob will spawned at your new location.

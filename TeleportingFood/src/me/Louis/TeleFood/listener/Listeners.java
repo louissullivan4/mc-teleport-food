@@ -1,21 +1,27 @@
 package me.Louis.TeleFood.listener;
 
+import java.util.ArrayList;
 import java.util.Random;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Zombie;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class Listeners implements Listener {
 	
 	@EventHandler
 	public void teleportPlayer(PlayerItemConsumeEvent event) {
 		Random rand =  new Random();
-		double limit = 50.0;
+		double limit = 70.0;
 		
 		boolean validTp = false;
 		Player p = event.getPlayer();
@@ -41,12 +47,33 @@ public class Listeners implements Listener {
 			        if (cloneLoc.getBlock().getType().isSolid()) {
 			        	validTp = true;
 						p.teleport(newLoc);
+						p.sendMessage("You have been telported");
 			        }
 			}
 		}
-		
-		
 		validTp = false;
 	}
+	
+	@EventHandler
+	public void mobSpawn(PlayerTeleportEvent event) {
+		EntityType[] hostileMobs = {EntityType.BLAZE,EntityType.CAVE_SPIDER,EntityType.CREEPER,EntityType.ELDER_GUARDIAN,EntityType.ENDER_DRAGON,EntityType.ENDERMAN,EntityType.EVOKER,EntityType.GHAST,EntityType.GUARDIAN,EntityType.HUSK,EntityType.ILLUSIONER,EntityType.MAGMA_CUBE,EntityType.SHULKER,EntityType.SILVERFISH,EntityType.SKELETON,EntityType.SLIME,EntityType.SPIDER,EntityType.VEX,EntityType.VINDICATOR,EntityType.WITCH,EntityType.WITHER,EntityType.WITHER_SKELETON,EntityType.ZOMBIE};
+		Player p = event.getPlayer();
+		Location currentLoc = p.getLocation();
+		World w = p.getWorld();
+		Random rand = new Random();
+        int randomMobNo = rand.nextInt(22);
+        try
+        {
+            Thread.sleep(100);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+        w.spawnEntity(currentLoc, hostileMobs[randomMobNo]);
+        p.sendMessage("Spawned a random mob");
+				
+	}
+	
 
 }
